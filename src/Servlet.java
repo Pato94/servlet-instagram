@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class HolaMundo
  */
-@WebServlet("/HolaMundo")
-public class HolaMundo extends HttpServlet {
+@WebServlet("/Servlet")
+public class Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public HolaMundo() {
+	public Servlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -32,7 +32,7 @@ public class HolaMundo extends HttpServlet {
 		// TODO Auto-generated method stub
 		String lat = request.getParameter("LAT");
 		String lng = request.getParameter("LONG");
-		String result = new ExampleHTTPGet()
+		String result = new HTTPGetter()
 				.HTTPGet("https://api.instagram.com/v1/media/search?lat=" + lat
 						+ "&lng=" + lng
 						+ "&client_id=506e25bd5b3c40338a96e04bcd02fea6");
@@ -43,6 +43,7 @@ public class HolaMundo extends HttpServlet {
 		out.println("<body>");
 		for (String url : listaUrls) {
 			out.print("<IMG SRC=\"");
+			
 			if ((url.indexOf("mp4") > -1) && (url.indexOf("jpg") > -1)) {
 				int numero = Math.min(url.indexOf("mp4"), url.indexOf("jpg"));
 				url = url.substring(0, numero + 3);
@@ -53,6 +54,7 @@ public class HolaMundo extends HttpServlet {
 					url = url.substring(0, url.indexOf("jpg") + 3);
 				}
 			}
+			//url = url.substring(0, url.indexOf("\"")-1);
 			out.print(url.replaceAll("/", ""));
 			out.print("\">");
 			out.println("<br>");

@@ -1,7 +1,7 @@
 import java.io.BufferedInputStream;
 import java.net.URL;
 
-public class ExampleHTTPGet {
+public class HTTPGetter {
     private String siteContent = "";
  
     public String HTTPGet( String strUrl )
