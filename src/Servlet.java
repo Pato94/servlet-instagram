@@ -39,26 +39,16 @@ public class Servlet extends HttpServlet {
 		ArrayList<String> listaUrls = obtenerUrls(result);
 		PrintWriter out = response.getWriter();
 		out.println("<html>");
-		out.println("<head></head>");
+		out.println("<head><title>Imagenes instagram para LAT="+lat+" y LONG="+lng+"</title></head>");
 		out.println("<body>");
+		out.println("<center>");
 		for (String url : listaUrls) {
 			out.print("<IMG SRC=\"");
-			
-			if ((url.indexOf("mp4") > -1) && (url.indexOf("jpg") > -1)) {
-				int numero = Math.min(url.indexOf("mp4"), url.indexOf("jpg"));
-				url = url.substring(0, numero + 3);
-			} else {
-				if (url.indexOf("mp4") > -1) {
-					url = url.substring(0, url.indexOf("mp4") + 3);
-				}else{
-					url = url.substring(0, url.indexOf("jpg") + 3);
-				}
-			}
-			//url = url.substring(0, url.indexOf("\"")-1);
 			out.print(url.replaceAll("/", ""));
 			out.print("\">");
 			out.println("<br>");
 		}
+		out.println("</center>");
 		out.println("</body>");
 		out.println("</html>");
 	}
@@ -66,12 +56,16 @@ public class Servlet extends HttpServlet {
 	ArrayList<String> obtenerUrls(String respuesta) {
 		ArrayList<String> retorno = new ArrayList<String>();
 		int tamano = 0;
+		String aux = "";
 		while (respuesta.indexOf("\"standard_resolution\":{\"url\":\"") > -1
 				&& tamano < 10) {
 			respuesta = respuesta.substring(respuesta
 					.indexOf("\"standard_resolution\":{\"url\":\"") + 30);
-			retorno.add(respuesta);
+			aux = respuesta.substring(0, respuesta.indexOf("\""));
+			if(aux.substring(aux.length()-3, aux.length()).equals("jpg")){
+			retorno.add(aux);
 			tamano++;
+			}
 		}
 		return retorno;
 	}
